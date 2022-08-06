@@ -3,3 +3,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/demo
     username: postgres
     password: 12345
+
+server:
+  port: 8090
+  servlet:
+    context-path: /capstone
