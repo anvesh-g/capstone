@@ -1,54 +1,51 @@
 package com.demo.capstone.controller;
 
+import com.demo.capstone.dto.AvgEmpSalInEachDeptByRating;
+import com.demo.capstone.dto.AvgSalInEachDept;
+import com.demo.capstone.dto.DeptWithHighestNoOfEmps;
+import com.demo.capstone.serviceImpl.BusinessService;
 import com.demo.capstone.service.DepartmentService;
-import com.demo.capstone.service.EmployeeService;
 import com.demo.capstone.service.PerformanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class BusinessController {
 
     @Autowired
+    @Qualifier("departmentService")
     private DepartmentService departmentService;
 
     @Autowired
-    private EmployeeService employeeService;
-
-    @Autowired
+    @Qualifier("performanceService")
     private PerformanceService performanceService;
 
+    @Autowired
+    private BusinessService businessService;
+
     @GetMapping(value = "/avgSalaryInEachDept")
-    public void averageSalaryInEachDepartment() {
-        //TODO IMPLEMENTATION
-        /*
-         select dept_id, sum(salary)/count(*) from employee
-         group by dept_id;
-        */
-        System.out.println("avgSalaryInEachDept");
+    public ResponseEntity<List<AvgSalInEachDept>> averageSalaryInEachDepartment() {
+        List<AvgSalInEachDept> avgSalInEachDeptList = businessService.getAvgSalInEachDept();
+        return new ResponseEntity<>(avgSalInEachDeptList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/avgSalaryInEachDeptByRating")
-    public void averageEmployeeSalaryInEachDepartmentForEachRating() {
-        //TODO IMPLEMENTATION
-        /*
-            select e.dept_id, p.rating, sum(salary)/count(*) from employee e, performance p
-            where e.employee_id = p.employee_id
-            group by e.dept_id, p.rating;
-         */
-        System.out.println("avgSalaryInEachDeptByRating");
+    public ResponseEntity<List<AvgEmpSalInEachDeptByRating>> averageEmployeeSalaryInEachDepartmentForEachRating() {
+       List<AvgEmpSalInEachDeptByRating> avgEmpSalInEachDeptByRatingList
+               = businessService.getAvgEmpSalInEachDeptByRating();
+       return new ResponseEntity<>(avgEmpSalInEachDeptByRatingList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/deptWithHighestNumberOfEmployees")
-    public void departmentWithHighestNumberOfEmployees() {
-            //TODO IMPLEMENTATION
-            /*
-                select dept_id, count(*) from employee
-                group by dept_id
-                order by count(*) desc
-                limit 1;
-             */
-        System.out.println("deptWithHighestNumberOfEmployees");
+    public ResponseEntity<List<DeptWithHighestNoOfEmps>> departmentWithHighestNumberOfEmployees() {
+        List<DeptWithHighestNoOfEmps> deptWithHighestNoOfEmpList
+                = businessService.getDeptWithHighestNoOfEmployees();
+        return new ResponseEntity<>(deptWithHighestNoOfEmpList, HttpStatus.OK);
     }
 }

@@ -39,7 +39,7 @@ public class Employee {
     Department department;
     @OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL,
-            mappedBy = "employee")
+            mappedBy = "employeeTest")
     Performance performance;
 
 }

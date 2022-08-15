@@ -3,6 +3,7 @@ package com.demo.capstone.controller;
 import com.demo.capstone.dto.PerformanceDTO;
 import com.demo.capstone.service.PerformanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PerformanceController {
 
     @Autowired
+    @Qualifier("performanceService")
     private PerformanceService performanceService;
 
     @PostMapping(value = "/reviewPerformance", consumes = "application/json")

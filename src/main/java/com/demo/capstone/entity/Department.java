@@ -1,7 +1,11 @@
 package com.demo.capstone.entity;
 
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
@@ -19,11 +23,11 @@ public class Department {
     @Id
     @Column(name = "dept_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long dept_id;
+    Long deptId;
 
     @Column(name = "dept_name")
     String deptName;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "departmentTest")
     List<Employee> employees;
 }
